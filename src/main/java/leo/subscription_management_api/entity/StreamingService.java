@@ -2,9 +2,10 @@ package leo.subscription_management_api.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import leo.subscription_management_api.dto.service.ServiceCreateDTO;
 
 @Entity
-public class Service {
+public class StreamingService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +15,14 @@ public class Service {
     @Column(nullable = false, length = 100)
     private String name;
 
-    public Service(){}
+    public StreamingService(){}
 
-    public Service(String name) {
+    public StreamingService(String name) {
         this.name = name;
+    }
+
+    public StreamingService(ServiceCreateDTO dto){
+        this.name = dto.getName();
     }
 
     public Long getId() {

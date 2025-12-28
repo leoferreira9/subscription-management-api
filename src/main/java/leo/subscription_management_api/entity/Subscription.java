@@ -20,7 +20,7 @@ public class Subscription {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "service_id")
-    private Service service;
+    private StreamingService streamingService;
 
     @DecimalMin(value = "0.0")
     @Column(nullable = false)
@@ -53,8 +53,8 @@ public class Subscription {
 
     public Subscription(){}
 
-    public Subscription(Service service, BigDecimal value, SubscriptionType subscriptionType, SubscriptionStatus subscriptionStatus, PaymentType paymentType, User user, LocalDate startDate, LocalDate nextBillingDate) {
-        this.service = service;
+    public Subscription(StreamingService streamingService, BigDecimal value, SubscriptionType subscriptionType, SubscriptionStatus subscriptionStatus, PaymentType paymentType, User user, LocalDate startDate, LocalDate nextBillingDate) {
+        this.streamingService = streamingService;
         this.value = value;
         this.subscriptionType = subscriptionType;
         this.subscriptionStatus = subscriptionStatus;
@@ -68,12 +68,12 @@ public class Subscription {
         return id;
     }
 
-    public Service getService() {
-        return service;
+    public StreamingService getService() {
+        return streamingService;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setService(StreamingService streamingService) {
+        this.streamingService = streamingService;
     }
 
     public BigDecimal getValue() {
