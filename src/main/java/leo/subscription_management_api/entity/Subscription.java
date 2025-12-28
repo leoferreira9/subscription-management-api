@@ -9,7 +9,6 @@ import leo.subscription_management_api.enums.SubscriptionType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 public class Subscription {
