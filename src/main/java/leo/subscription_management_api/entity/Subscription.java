@@ -8,6 +8,7 @@ import leo.subscription_management_api.enums.SubscriptionStatus;
 import leo.subscription_management_api.enums.SubscriptionType;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -45,15 +46,15 @@ public class Subscription {
 
     @NotNull
     @Column(nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
     @NotNull
     @Column(nullable = false)
-    private Date nextBillingDate;
+    private LocalDate nextBillingDate;
 
     public Subscription(){}
 
-    public Subscription(Service service, BigDecimal value, SubscriptionType subscriptionType, SubscriptionStatus subscriptionStatus, PaymentType paymentType, User user, Date startDate, Date nextBillingDate) {
+    public Subscription(Service service, BigDecimal value, SubscriptionType subscriptionType, SubscriptionStatus subscriptionStatus, PaymentType paymentType, User user, LocalDate startDate, LocalDate nextBillingDate) {
         this.service = service;
         this.value = value;
         this.subscriptionType = subscriptionType;
@@ -116,19 +117,19 @@ public class Subscription {
         this.user = user;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getNextBillingDate() {
+    public LocalDate getNextBillingDate() {
         return nextBillingDate;
     }
 
-    public void setNextBillingDate(Date nextBillingDate) {
+    public void setNextBillingDate(LocalDate nextBillingDate) {
         this.nextBillingDate = nextBillingDate;
     }
 }
