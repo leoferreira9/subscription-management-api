@@ -3,6 +3,7 @@ package leo.subscription_management_api.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import leo.subscription_management_api.dto.user.UserCreateDTO;
 
 @Entity
 public class User {
@@ -25,6 +26,11 @@ public class User {
     public User(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public User(UserCreateDTO dto){
+        this.name = dto.getName();
+        this.email = dto.getEmail();
     }
 
     public Long getId() {
