@@ -22,7 +22,7 @@ public class Subscription {
     @JoinColumn(name = "service_id")
     private Service service;
 
-    @DecimalMin(value = "0.0", inclusive = false)
+    @DecimalMin(value = "0.0")
     @Column(nullable = false)
     private BigDecimal value;
 
