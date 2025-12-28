@@ -10,7 +10,7 @@ public class UserDTO {
 
     public UserDTO(){};
 
-    private UserDTO(User user){
+    public UserDTO(User user){
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
