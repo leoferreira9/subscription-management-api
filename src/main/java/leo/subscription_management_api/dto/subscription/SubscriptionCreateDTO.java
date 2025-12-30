@@ -48,32 +48,60 @@ public class SubscriptionCreateDTO {
         this.nextBillingDate = nextBillingDate;
     }
 
-    public void setServiceId(Long serviceId) {
-        this.serviceId = serviceId;
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public BigDecimal getValue() {
+        return value;
     }
 
     public void setValue(BigDecimal value) {
         this.value = value;
     }
 
+    public SubscriptionType getSubscriptionType() {
+        return subscriptionType;
+    }
+
     public void setSubscriptionType(SubscriptionType subscriptionType) {
         this.subscriptionType = subscriptionType;
+    }
+
+    public SubscriptionStatus getSubscriptionStatus() {
+        return subscriptionStatus;
     }
 
     public void setSubscriptionStatus(SubscriptionStatus subscriptionStatus) {
         this.subscriptionStatus = subscriptionStatus;
     }
 
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
     public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
+    }
+
+    public LocalDate getNextBillingDate() {
+        return nextBillingDate;
     }
 
     public void setNextBillingDate(LocalDate nextBillingDate) {
