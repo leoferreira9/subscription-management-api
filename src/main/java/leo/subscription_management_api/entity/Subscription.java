@@ -3,6 +3,7 @@ package leo.subscription_management_api.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import leo.subscription_management_api.dto.subscription.SubscriptionCreateDTO;
 import leo.subscription_management_api.enums.PaymentType;
 import leo.subscription_management_api.enums.SubscriptionStatus;
 import leo.subscription_management_api.enums.SubscriptionType;
@@ -62,6 +63,17 @@ public class Subscription {
         this.user = user;
         this.startDate = startDate;
         this.nextBillingDate = nextBillingDate;
+    }
+
+    public Subscription(SubscriptionCreateDTO dto, StreamingService service, User user) {
+        this.streamingService = service;
+        this.value = dto.getValue();
+        this.subscriptionType = dto.getSubscriptionType();
+        this.subscriptionStatus = dto.getSubscriptionStatus();
+        this.paymentType = dto.getPaymentType();
+        this.user = user;
+        this.startDate = dto.getStartDate();
+        this.nextBillingDate = dto.getNextBillingDate();
     }
 
     public Long getId() {
