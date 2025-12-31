@@ -2,6 +2,7 @@ package leo.subscription_management_api.dto.subscription;
 
 import leo.subscription_management_api.dto.service.ServiceDTO;
 import leo.subscription_management_api.dto.user.UserDTO;
+import leo.subscription_management_api.entity.Subscription;
 import leo.subscription_management_api.enums.PaymentType;
 import leo.subscription_management_api.enums.SubscriptionStatus;
 import leo.subscription_management_api.enums.SubscriptionType;
@@ -22,16 +23,16 @@ public class SubscriptionDTO {
 
     public SubscriptionDTO(){}
 
-    public SubscriptionDTO(Long id, ServiceDTO serviceDTO, BigDecimal value, SubscriptionType subscriptionType, SubscriptionStatus subscriptionStatus, PaymentType paymentType, UserDTO userDTO, LocalDate startDate, LocalDate nextBillingDate) {
-        this.id = id;
+    public SubscriptionDTO(Subscription subscription, ServiceDTO serviceDTO, UserDTO userDTO) {
+        this.id = subscription.getId();
         this.serviceDTO = serviceDTO;
-        this.value = value;
-        this.subscriptionType = subscriptionType;
-        this.subscriptionStatus = subscriptionStatus;
-        this.paymentType = paymentType;
+        this.value = subscription.getValue();
+        this.subscriptionType = subscription.getSubscriptionType();
+        this.subscriptionStatus = subscription.getSubscriptionStatus();
+        this.paymentType = subscription.getPaymentType();
         this.userDTO = userDTO;
-        this.startDate = startDate;
-        this.nextBillingDate = nextBillingDate;
+        this.startDate = subscription.getStartDate();
+        this.nextBillingDate = subscription.getNextBillingDate();
     }
 
     public Long getId() {
