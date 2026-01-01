@@ -1,0 +1,30 @@
+package leo.subscription_management_api.exception;
+
+import org.springframework.http.HttpStatus;
+
+import java.time.LocalDateTime;
+
+public class ErrorResponse {
+
+    private final HttpStatus status;
+    private final String message;
+    private final LocalDateTime timestamp;
+
+    public ErrorResponse(HttpStatus status, String message, LocalDateTime timestamp){
+        this.status = status;
+        this.message = message;
+        this.timestamp = timestamp;
+    }
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+    public String getMessage() {
+        return message;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+}
