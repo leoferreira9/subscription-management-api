@@ -2,6 +2,7 @@ package leo.subscription_management_api.service;
 
 import leo.subscription_management_api.dto.service.ServiceCreateDTO;
 import leo.subscription_management_api.dto.service.ServiceDTO;
+import leo.subscription_management_api.dto.service.ServiceUpdateDTO;
 import leo.subscription_management_api.entity.StreamingService;
 import leo.subscription_management_api.exception.EntityNotFound;
 import leo.subscription_management_api.mapper.StreamingPlatformMapper;
@@ -35,7 +36,7 @@ public class StreamingPlatformService {
         return serviceRepository.findAll().stream().map(mapper::StreamingPlatformEntityToDTO).toList();
     }
 
-    public ServiceDTO update(Long id, ServiceCreateDTO dto){
+    public ServiceDTO update(Long id, ServiceUpdateDTO dto){
         StreamingService serviceExists = serviceRepository.findById(id).orElseThrow(() -> new EntityNotFound("Streaming service not found with ID: " + id));
         serviceExists.setName(dto.getName());
 

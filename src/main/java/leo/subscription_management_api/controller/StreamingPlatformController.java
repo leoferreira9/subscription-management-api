@@ -3,6 +3,7 @@ package leo.subscription_management_api.controller;
 import jakarta.validation.Valid;
 import leo.subscription_management_api.dto.service.ServiceCreateDTO;
 import leo.subscription_management_api.dto.service.ServiceDTO;
+import leo.subscription_management_api.dto.service.ServiceUpdateDTO;
 import leo.subscription_management_api.service.StreamingPlatformService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class StreamingPlatformController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ServiceDTO> update(@PathVariable Long id, @RequestBody @Valid ServiceCreateDTO dto){
+    public ResponseEntity<ServiceDTO> update(@PathVariable Long id, @RequestBody @Valid ServiceUpdateDTO dto){
         return ResponseEntity.ok(streamingPlatformService.update(id, dto));
     }
 
