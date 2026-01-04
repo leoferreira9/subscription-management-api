@@ -6,7 +6,6 @@ import leo.subscription_management_api.enums.PaymentType;
 import leo.subscription_management_api.enums.SubscriptionStatus;
 import leo.subscription_management_api.enums.SubscriptionType;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class SubscriptionCreateDTO {
 
@@ -29,23 +28,15 @@ public class SubscriptionCreateDTO {
     @NotNull
     private Long userId;
 
-    @NotNull
-    private LocalDate startDate;
-
-    @NotNull
-    private LocalDate nextBillingDate;
-
     public SubscriptionCreateDTO(){}
 
-    public SubscriptionCreateDTO(Long serviceId, BigDecimal value, SubscriptionType subscriptionType, SubscriptionStatus subscriptionStatus, PaymentType paymentType, Long userId, LocalDate startDate, LocalDate nextBillingDate) {
+    public SubscriptionCreateDTO(Long serviceId, BigDecimal value, SubscriptionType subscriptionType, SubscriptionStatus subscriptionStatus, PaymentType paymentType, Long userId) {
         this.serviceId = serviceId;
         this.value = value;
         this.subscriptionType = subscriptionType;
         this.subscriptionStatus = subscriptionStatus;
         this.paymentType = paymentType;
         this.userId = userId;
-        this.startDate = startDate;
-        this.nextBillingDate = nextBillingDate;
     }
 
     public Long getServiceId() {
@@ -90,21 +81,5 @@ public class SubscriptionCreateDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getNextBillingDate() {
-        return nextBillingDate;
-    }
-
-    public void setNextBillingDate(LocalDate nextBillingDate) {
-        this.nextBillingDate = nextBillingDate;
     }
 }

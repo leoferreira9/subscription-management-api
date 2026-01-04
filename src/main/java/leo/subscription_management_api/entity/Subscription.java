@@ -65,17 +65,6 @@ public class Subscription {
         this.nextBillingDate = nextBillingDate;
     }
 
-    public Subscription(SubscriptionCreateDTO dto, StreamingService service, User user) {
-        this.streamingService = service;
-        this.value = dto.getValue();
-        this.subscriptionType = dto.getSubscriptionType();
-        this.subscriptionStatus = dto.getSubscriptionStatus();
-        this.paymentType = dto.getPaymentType();
-        this.user = user;
-        this.startDate = dto.getStartDate();
-        this.nextBillingDate = dto.getNextBillingDate();
-    }
-
     public Long getId() {
         return id;
     }

@@ -13,6 +13,7 @@ import leo.subscription_management_api.repository.SubscriptionRepository;
 import leo.subscription_management_api.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -32,7 +33,20 @@ public class SubscriptionService {
         StreamingService service = serviceRepository.findById(dto.getServiceId()).orElseThrow(() -> new EntityNotFound("Streaming service not found with ID: " + dto.getServiceId()));
         User user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new EntityNotFound("User not found with ID: " + dto.getUserId()));
 
-        Subscription subscription = subscriptionRepository.save(new Subscription(dto, service, user));
+        LocalDate startDate = LocalDate.now();
+        LocalDate nextBillingDate = startDate.plusMonths(1);
+
+        Subscription subscription = subscriptionRepository.save(
+                new Subscription(service,
+                        dto.getValue(),
+                        dto.getSubscriptionType(),
+                        dto.getSubscriptionStatus(),
+                        dto.getPaymentType(),
+                        user,
+                        startDate,
+                        nextBillingDate)
+        );
+
         ServiceDTO serviceDTO = new ServiceDTO(service);
         UserDTO userDTO = new UserDTO(user);
 
@@ -65,8 +79,6 @@ public class SubscriptionService {
         subscriptionExists.setService(service);
         subscriptionExists.setUser(user);
         subscriptionExists.setPaymentType(dto.getPaymentType());
-        subscriptionExists.setStartDate(dto.getStartDate());
-        subscriptionExists.setNextBillingDate(dto.getNextBillingDate());
 
         ServiceDTO serviceDTO = new ServiceDTO(subscriptionExists.getService());
         UserDTO userDTO = new UserDTO(subscriptionExists.getUser());
