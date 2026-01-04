@@ -4,6 +4,7 @@ import leo.subscription_management_api.dto.service.ServiceCreateDTO;
 import leo.subscription_management_api.dto.service.ServiceDTO;
 import leo.subscription_management_api.entity.StreamingService;
 import leo.subscription_management_api.exception.EntityNotFound;
+import leo.subscription_management_api.mapper.StreamingPlatformMapper;
 import leo.subscription_management_api.repository.ServiceRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,31 +14,34 @@ import java.util.List;
 public class StreamingPlatformService {
 
     private final ServiceRepository serviceRepository;
+    private final StreamingPlatformMapper mapper;
 
-    public StreamingPlatformService(ServiceRepository serviceRepository){
+    public StreamingPlatformService(ServiceRepository serviceRepository, StreamingPlatformMapper mapper){
         this.serviceRepository = serviceRepository;
+        this.mapper = mapper;
     }
 
     public ServiceDTO create(ServiceCreateDTO dto){
-        StreamingService service = serviceRepository.save(new StreamingService(dto.getName()));
-        return new ServiceDTO(service);
+        StreamingService service = serviceRepository.save(mapper.streamingPlatformCreateDtoToEntity(dto));
+        return mapper.StreamingPlatformEntityToDTO(service);
     }
 
     public ServiceDTO findById(Long id){
         StreamingService service = serviceRepository.findById(id).orElseThrow(() -> new EntityNotFound("Streaming service not found with ID: " + id));
-        return new ServiceDTO(service);
+        return mapper.StreamingPlatformEntityToDTO(service);
     }
 
     public List<ServiceDTO> findAll(){
-        return serviceRepository.findAll().stream().map(ServiceDTO::new).toList();
+        return serviceRepository.findAll().stream().map(mapper::StreamingPlatformEntityToDTO).toList();
     }
 
     public ServiceDTO update(Long id, ServiceCreateDTO dto){
         StreamingService serviceExists = serviceRepository.findById(id).orElseThrow(() -> new EntityNotFound("Streaming service not found with ID: " + id));
         serviceExists.setName(dto.getName());
 
-        StreamingService savedService = serviceRepository.save(serviceExists);
-        return new ServiceDTO(savedService);
+        serviceRepository.save(serviceExists);
+
+        return mapper.StreamingPlatformEntityToDTO(serviceExists);
     }
 
     public void delete(Long id){
