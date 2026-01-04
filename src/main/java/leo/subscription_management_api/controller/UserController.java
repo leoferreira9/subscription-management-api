@@ -3,6 +3,7 @@ package leo.subscription_management_api.controller;
 import jakarta.validation.Valid;
 import leo.subscription_management_api.dto.user.UserCreateDTO;
 import leo.subscription_management_api.dto.user.UserDTO;
+import leo.subscription_management_api.dto.user.UserUpdateDTO;
 import leo.subscription_management_api.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserCreateDTO dto){
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO dto){
         return ResponseEntity.ok().body(userService.update(id, dto));
     }
 

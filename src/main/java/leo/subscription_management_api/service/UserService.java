@@ -2,6 +2,7 @@ package leo.subscription_management_api.service;
 
 import leo.subscription_management_api.dto.user.UserCreateDTO;
 import leo.subscription_management_api.dto.user.UserDTO;
+import leo.subscription_management_api.dto.user.UserUpdateDTO;
 import leo.subscription_management_api.entity.User;
 import leo.subscription_management_api.exception.EntityNotFound;
 import leo.subscription_management_api.mapper.UserMapper;
@@ -34,7 +35,7 @@ public class UserService {
         return userRepository.findAll().stream().map(userMapper::userEntityToDTO).toList();
     }
 
-    public UserDTO update(Long id, UserCreateDTO dto){
+    public UserDTO update(Long id, UserUpdateDTO dto){
         User userExists = userRepository.findById(id).orElseThrow(() -> new EntityNotFound("User not found with ID: " + id));
         userExists.setName(dto.getName());
         userExists.setEmail(dto.getEmail());
