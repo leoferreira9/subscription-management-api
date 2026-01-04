@@ -3,6 +3,7 @@ package leo.subscription_management_api.service;
 import leo.subscription_management_api.dto.service.ServiceDTO;
 import leo.subscription_management_api.dto.subscription.SubscriptionCreateDTO;
 import leo.subscription_management_api.dto.subscription.SubscriptionDTO;
+import leo.subscription_management_api.dto.subscription.SubscriptionUpdateDTO;
 import leo.subscription_management_api.dto.user.UserDTO;
 import leo.subscription_management_api.entity.StreamingService;
 import leo.subscription_management_api.entity.Subscription;
@@ -67,17 +68,12 @@ public class SubscriptionService {
                 .toList();
     }
 
-    public SubscriptionDTO update(Long id, SubscriptionCreateDTO dto){
+    public SubscriptionDTO update(Long id, SubscriptionUpdateDTO dto){
         Subscription subscriptionExists = subscriptionRepository.findById(id).orElseThrow(() -> new EntityNotFound("Subscription not found with ID: " + id));
-
-        StreamingService service = serviceRepository.findById(dto.getServiceId()).orElseThrow(() -> new EntityNotFound("Streaming service not found with ID: " + dto.getServiceId()));
-        User user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new EntityNotFound("User not found with ID: " + dto.getUserId()));
 
         subscriptionExists.setSubscriptionStatus(dto.getSubscriptionStatus());
         subscriptionExists.setSubscriptionType(dto.getSubscriptionType());
         subscriptionExists.setValue(dto.getValue());
-        subscriptionExists.setService(service);
-        subscriptionExists.setUser(user);
         subscriptionExists.setPaymentType(dto.getPaymentType());
 
         ServiceDTO serviceDTO = new ServiceDTO(subscriptionExists.getService());

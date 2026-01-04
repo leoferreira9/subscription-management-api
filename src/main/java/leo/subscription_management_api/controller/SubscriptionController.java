@@ -3,6 +3,7 @@ package leo.subscription_management_api.controller;
 import jakarta.validation.Valid;
 import leo.subscription_management_api.dto.subscription.SubscriptionCreateDTO;
 import leo.subscription_management_api.dto.subscription.SubscriptionDTO;
+import leo.subscription_management_api.dto.subscription.SubscriptionUpdateDTO;
 import leo.subscription_management_api.service.SubscriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class SubscriptionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SubscriptionDTO> update(@PathVariable Long id, @RequestBody @Valid SubscriptionCreateDTO dto){
+    public ResponseEntity<SubscriptionDTO> update(@PathVariable Long id, @RequestBody @Valid SubscriptionUpdateDTO dto){
         return ResponseEntity.ok(subscriptionService.update(id, dto));
     }
 
