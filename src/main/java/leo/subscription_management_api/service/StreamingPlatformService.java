@@ -19,7 +19,7 @@ public class StreamingPlatformService {
     }
 
     public ServiceDTO create(ServiceCreateDTO dto){
-        StreamingService service = serviceRepository.save(new StreamingService(dto));
+        StreamingService service = serviceRepository.save(new StreamingService(dto.getName()));
         return new ServiceDTO(service);
     }
 

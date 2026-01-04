@@ -2,7 +2,6 @@ package leo.subscription_management_api.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import leo.subscription_management_api.dto.service.ServiceCreateDTO;
 
 @Entity
 public class StreamingService {
@@ -19,10 +18,6 @@ public class StreamingService {
 
     public StreamingService(String name) {
         this.name = name;
-    }
-
-    public StreamingService(ServiceCreateDTO dto){
-        this.name = dto.getName();
     }
 
     public Long getId() {
