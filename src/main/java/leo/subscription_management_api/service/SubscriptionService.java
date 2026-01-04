@@ -1,15 +1,14 @@
 package leo.subscription_management_api.service;
 
-import leo.subscription_management_api.dto.service.ServiceDTO;
 import leo.subscription_management_api.dto.subscription.SubscriptionCreateDTO;
 import leo.subscription_management_api.dto.subscription.SubscriptionDTO;
 import leo.subscription_management_api.dto.subscription.SubscriptionUpdateDTO;
-import leo.subscription_management_api.dto.user.UserDTO;
 import leo.subscription_management_api.entity.StreamingService;
 import leo.subscription_management_api.entity.Subscription;
 import leo.subscription_management_api.entity.User;
 import leo.subscription_management_api.exception.EntityNotFound;
-import leo.subscription_management_api.repository.ServiceRepository;
+import leo.subscription_management_api.mapper.SubscriptionMapper;
+import leo.subscription_management_api.repository.StreamingServiceRepository;
 import leo.subscription_management_api.repository.SubscriptionRepository;
 import leo.subscription_management_api.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -21,17 +20,22 @@ import java.util.List;
 public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
-    private final ServiceRepository serviceRepository;
+    private final StreamingServiceRepository streamingServiceRepository;
     private final UserRepository userRepository;
+    private final SubscriptionMapper subscriptionMapper;
 
-    public SubscriptionService(SubscriptionRepository subscriptionRepository, ServiceRepository serviceRepository, UserRepository userRepository){
+    public SubscriptionService(SubscriptionRepository subscriptionRepository,
+                               StreamingServiceRepository streamingServiceRepository,
+                               UserRepository userRepository,
+                               SubscriptionMapper subscriptionMapper){
         this.subscriptionRepository = subscriptionRepository;
-        this.serviceRepository = serviceRepository;
+        this.streamingServiceRepository = streamingServiceRepository;
         this.userRepository = userRepository;
+        this.subscriptionMapper = subscriptionMapper;
     }
 
     public SubscriptionDTO create(SubscriptionCreateDTO dto){
-        StreamingService service = serviceRepository.findById(dto.getServiceId()).orElseThrow(() -> new EntityNotFound("Streaming service not found with ID: " + dto.getServiceId()));
+        StreamingService service = streamingServiceRepository.findById(dto.getServiceId()).orElseThrow(() -> new EntityNotFound("Streaming service not found with ID: " + dto.getServiceId()));
         User user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new EntityNotFound("User not found with ID: " + dto.getUserId()));
 
         LocalDate startDate = LocalDate.now();
@@ -47,24 +51,17 @@ public class SubscriptionService {
                         startDate,
                         nextBillingDate)
         );
-
-        ServiceDTO serviceDTO = new ServiceDTO(service);
-        UserDTO userDTO = new UserDTO(user);
-
-        return new SubscriptionDTO(subscription, serviceDTO, userDTO);
+        return subscriptionMapper.subscriptionEntityToDto(subscription);
     }
 
     public SubscriptionDTO findById(Long id){
         Subscription subscription = subscriptionRepository.findById(id).orElseThrow(() -> new EntityNotFound("Subscription not found with ID: " + id));
-        ServiceDTO serviceDTO = new ServiceDTO(subscription.getService());
-        UserDTO userDTO = new UserDTO(subscription.getUser());
-
-        return new SubscriptionDTO(subscription, serviceDTO, userDTO);
+        return subscriptionMapper.subscriptionEntityToDto(subscription);
     }
 
     public List<SubscriptionDTO> findAll(){
         return subscriptionRepository.findAll().stream()
-                .map(sub -> new SubscriptionDTO(sub, new ServiceDTO(sub.getService()), new UserDTO(sub.getUser())))
+                .map(subscriptionMapper::subscriptionEntityToDto)
                 .toList();
     }
 
@@ -76,10 +73,9 @@ public class SubscriptionService {
         subscriptionExists.setValue(dto.getValue());
         subscriptionExists.setPaymentType(dto.getPaymentType());
 
-        ServiceDTO serviceDTO = new ServiceDTO(subscriptionExists.getService());
-        UserDTO userDTO = new UserDTO(subscriptionExists.getUser());
+        subscriptionRepository.save(subscriptionExists);
 
-        return new SubscriptionDTO(subscriptionExists, serviceDTO, userDTO);
+        return subscriptionMapper.subscriptionEntityToDto(subscriptionExists);
     }
 
     public void delete(Long id){

@@ -8,9 +8,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {UserMapper.class, StreamingServiceMapper.class})
 public interface SubscriptionMapper {
 
+    @Mapping(source = "service", target = "streamingServiceDTO")
+    @Mapping(source = "user", target = "userDTO")
     SubscriptionDTO subscriptionEntityToDto(Subscription subscription);
 
     Subscription subscriptionCreateDtoToEntity(SubscriptionCreateDTO subscriptionCreateDTO);

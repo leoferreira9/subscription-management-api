@@ -2,7 +2,6 @@ package leo.subscription_management_api.dto.subscription;
 
 import leo.subscription_management_api.dto.streamingservice.StreamingServiceDTO;
 import leo.subscription_management_api.dto.user.UserDTO;
-import leo.subscription_management_api.entity.Subscription;
 import leo.subscription_management_api.enums.PaymentType;
 import leo.subscription_management_api.enums.SubscriptionStatus;
 import leo.subscription_management_api.enums.SubscriptionType;
@@ -22,18 +21,6 @@ public class SubscriptionDTO {
     private LocalDate nextBillingDate;
 
     public SubscriptionDTO(){}
-
-    public SubscriptionDTO(Subscription subscription, StreamingServiceDTO streamingServiceDTO, UserDTO userDTO) {
-        this.id = subscription.getId();
-        this.streamingServiceDTO = streamingServiceDTO;
-        this.value = subscription.getValue();
-        this.subscriptionType = subscription.getSubscriptionType();
-        this.subscriptionStatus = subscription.getSubscriptionStatus();
-        this.paymentType = subscription.getPaymentType();
-        this.userDTO = userDTO;
-        this.startDate = subscription.getStartDate();
-        this.nextBillingDate = subscription.getNextBillingDate();
-    }
 
     public Long getId() {
         return id;
@@ -69,5 +56,41 @@ public class SubscriptionDTO {
 
     public LocalDate getNextBillingDate() {
         return nextBillingDate;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setStreamingServiceDTO(StreamingServiceDTO streamingServiceDTO) {
+        this.streamingServiceDTO = streamingServiceDTO;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
+    public void setSubscriptionType(SubscriptionType subscriptionType) {
+        this.subscriptionType = subscriptionType;
+    }
+
+    public void setSubscriptionStatus(SubscriptionStatus subscriptionStatus) {
+        this.subscriptionStatus = subscriptionStatus;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public void setUserDTO(UserDTO userDTO) {
+        this.userDTO = userDTO;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setNextBillingDate(LocalDate nextBillingDate) {
+        this.nextBillingDate = nextBillingDate;
     }
 }
