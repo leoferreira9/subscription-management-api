@@ -1,15 +1,15 @@
-package leo.subscription_management_api.dto.service;
+package leo.subscription_management_api.dto.streamingservice;
 
 import leo.subscription_management_api.entity.StreamingService;
 
-public class ServiceDTO {
+public class StreamingServiceDTO {
 
     private Long id;
     private String name;
 
-    public ServiceDTO(){}
+    public StreamingServiceDTO(){}
 
-    public ServiceDTO(StreamingService streamingService) {
+    public StreamingServiceDTO(StreamingService streamingService) {
         this.id = streamingService.getId();
         this.name = streamingService.getName();
     }

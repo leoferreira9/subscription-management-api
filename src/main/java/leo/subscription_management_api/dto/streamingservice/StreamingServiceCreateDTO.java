@@ -1,17 +1,17 @@
-package leo.subscription_management_api.dto.service;
+package leo.subscription_management_api.dto.streamingservice;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class ServiceCreateDTO {
+public class StreamingServiceCreateDTO {
 
     @NotBlank
     @Size(max = 100)
     private String name;
 
-    public ServiceCreateDTO(){}
+    public StreamingServiceCreateDTO(){}
 
-    public ServiceCreateDTO(String name) {
+    public StreamingServiceCreateDTO(String name) {
         this.name = name;
     }
 

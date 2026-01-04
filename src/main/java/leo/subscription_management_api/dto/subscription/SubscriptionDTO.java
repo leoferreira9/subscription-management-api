@@ -1,6 +1,6 @@
 package leo.subscription_management_api.dto.subscription;
 
-import leo.subscription_management_api.dto.service.ServiceDTO;
+import leo.subscription_management_api.dto.streamingservice.StreamingServiceDTO;
 import leo.subscription_management_api.dto.user.UserDTO;
 import leo.subscription_management_api.entity.Subscription;
 import leo.subscription_management_api.enums.PaymentType;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class SubscriptionDTO {
 
     private Long id;
-    private ServiceDTO serviceDTO;
+    private StreamingServiceDTO streamingServiceDTO;
     private BigDecimal value;
     private SubscriptionType subscriptionType;
     private SubscriptionStatus subscriptionStatus;
@@ -23,9 +23,9 @@ public class SubscriptionDTO {
 
     public SubscriptionDTO(){}
 
-    public SubscriptionDTO(Subscription subscription, ServiceDTO serviceDTO, UserDTO userDTO) {
+    public SubscriptionDTO(Subscription subscription, StreamingServiceDTO streamingServiceDTO, UserDTO userDTO) {
         this.id = subscription.getId();
-        this.serviceDTO = serviceDTO;
+        this.streamingServiceDTO = streamingServiceDTO;
         this.value = subscription.getValue();
         this.subscriptionType = subscription.getSubscriptionType();
         this.subscriptionStatus = subscription.getSubscriptionStatus();
@@ -39,8 +39,8 @@ public class SubscriptionDTO {
         return id;
     }
 
-    public ServiceDTO getServiceDTO() {
-        return serviceDTO;
+    public StreamingServiceDTO getServiceDTO() {
+        return streamingServiceDTO;
     }
 
     public BigDecimal getValue() {
