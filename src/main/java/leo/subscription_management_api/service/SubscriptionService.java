@@ -3,11 +3,15 @@ package leo.subscription_management_api.service;
 import leo.subscription_management_api.dto.subscription.SubscriptionCreateDTO;
 import leo.subscription_management_api.dto.subscription.SubscriptionDTO;
 import leo.subscription_management_api.dto.subscription.SubscriptionUpdateDTO;
+import leo.subscription_management_api.entity.PaymentHistory;
 import leo.subscription_management_api.entity.StreamingService;
 import leo.subscription_management_api.entity.Subscription;
 import leo.subscription_management_api.entity.User;
+import leo.subscription_management_api.enums.PaymentStatus;
+import leo.subscription_management_api.enums.SubscriptionType;
 import leo.subscription_management_api.exception.EntityNotFound;
 import leo.subscription_management_api.mapper.SubscriptionMapper;
+import leo.subscription_management_api.repository.PaymentHistoryRepository;
 import leo.subscription_management_api.repository.StreamingServiceRepository;
 import leo.subscription_management_api.repository.SubscriptionRepository;
 import leo.subscription_management_api.repository.UserRepository;
@@ -23,15 +27,18 @@ public class SubscriptionService {
     private final StreamingServiceRepository streamingServiceRepository;
     private final UserRepository userRepository;
     private final SubscriptionMapper subscriptionMapper;
+    private final PaymentHistoryRepository paymentHistoryRepository;
 
     public SubscriptionService(SubscriptionRepository subscriptionRepository,
                                StreamingServiceRepository streamingServiceRepository,
                                UserRepository userRepository,
-                               SubscriptionMapper subscriptionMapper){
+                               SubscriptionMapper subscriptionMapper,
+                               PaymentHistoryRepository paymentHistoryRepository){
         this.subscriptionRepository = subscriptionRepository;
         this.streamingServiceRepository = streamingServiceRepository;
         this.userRepository = userRepository;
         this.subscriptionMapper = subscriptionMapper;
+        this.paymentHistoryRepository = paymentHistoryRepository;
     }
 
     public SubscriptionDTO create(SubscriptionCreateDTO dto){
@@ -39,7 +46,7 @@ public class SubscriptionService {
         User user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new EntityNotFound("User not found with ID: " + dto.getUserId()));
 
         LocalDate startDate = LocalDate.now();
-        LocalDate nextBillingDate = startDate.plusMonths(1);
+        LocalDate nextBillingDate = dto.getSubscriptionType().equals(SubscriptionType.MONTHLY) ? startDate.plusMonths(1) : startDate.plusYears(1);
 
         Subscription subscription = subscriptionRepository.save(
                 new Subscription(service,
@@ -51,6 +58,9 @@ public class SubscriptionService {
                         startDate,
                         nextBillingDate)
         );
+
+        PaymentHistory paymentHistory = paymentHistoryRepository.save(new PaymentHistory(subscription, PaymentStatus.PENDING, subscription.getValue()));
+
         return subscriptionMapper.subscriptionEntityToDto(subscription);
     }
 
