@@ -1,4 +1,4 @@
-package leo.subscription_management_api.dto.streamingservice;
+package leo.subscription_management_api.service;
 
 import leo.subscription_management_api.dto.paymenthistory.PaymentHistoryDTO;
 import leo.subscription_management_api.mapper.PaymentHistoryMapper;
